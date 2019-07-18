@@ -1,0 +1,6 @@
+query {
+    findAllBooks {
+        title,
+        isbn
+    }
+}
