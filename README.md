@@ -1,5 +1,6 @@
 # graphql-books
 
+* Playground: http://localhost:8080/gui
 * Graphiql http://localhost:8080/graphiql
 * Voyager: http://localhost:8080/voyager
 
