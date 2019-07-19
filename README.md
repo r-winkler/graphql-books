@@ -7,7 +7,7 @@
 # branches
 
 * master: App implemented with 3rd party library leangen/graphql-spqr
-* java-graphql: App implemented without 3rd party libraries
+* java-graphql: App implemented without 3rd party libraries (no subscription support)
 
 Inspired by 
 
