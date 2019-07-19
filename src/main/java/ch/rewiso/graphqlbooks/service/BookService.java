@@ -7,9 +7,13 @@ import ch.rewiso.graphqlbooks.repository.AuthorRepository;
 import ch.rewiso.graphqlbooks.repository.BookRepository;
 import io.leangen.graphql.annotations.*;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
+import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.FluxSink;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @GraphQLApi
@@ -21,6 +25,8 @@ public class BookService {
 
     @Autowired
     private BookRepository bookRepository;
+
+    private final List<FluxSink<Book>> subscribers = new ArrayList<>();
 
     @GraphQLQuery
     public @GraphQLNonNull List<Book> findAllBooks() {
@@ -46,6 +52,8 @@ public class BookService {
     public @GraphQLNonNull Book newBook(@GraphQLNonNull String title, @GraphQLNonNull String isbn, int pageCount, @GraphQLNonNull @GraphQLArgument(name = "author") long authorId) {
         Author author = authorRepository.findById(authorId).orElse(null);
         Book newBook = new Book(title, isbn, pageCount, author);
+
+        subscribers.forEach(subscriber -> subscriber.next(newBook)); //Notify all the subscribers
         return bookRepository.save(newBook);
     }
 
@@ -65,6 +73,11 @@ public class BookService {
 
         bookRepository.save(updatedBook);
         return updatedBook;
+    }
+
+    @GraphQLSubscription
+    public Publisher<Book> newBookReleased() {
+        return Flux.create(subscriber -> subscribers.add(subscriber.onDispose(() -> subscribers.remove(subscriber))), FluxSink.OverflowStrategy.LATEST);
     }
 
 
