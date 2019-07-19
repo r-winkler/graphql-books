@@ -3,6 +3,10 @@
 * Graphiql http://localhost:8080/graphiql
 * Voyager: http://localhost:8080/voyager
 
+# branches
+
+* master: App implemented with 3rd party library leangen/graphql-spqr
+* java-graphql: App implemented without 3rd party libraries
 
 Inspired by 
 
