@@ -11,7 +11,6 @@ import com.graphql.spring.boot.test.GraphQLTestTemplate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -25,7 +24,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ImportAutoConfiguration
 // Do not use @GraphQLTest as we did not use their GraphQL java dependency and so we have to do use our autoconfiguration by using @ImportAutoConfiguration
 // https://github.com/graphql-java-kickstart/graphql-spring-boot/blob/master/graphql-spring-boot-test-autoconfigure/src/main/java/com/graphql/spring/boot/test/GraphQLTest.java
 public class GraphqlBooksApplicationTests {
